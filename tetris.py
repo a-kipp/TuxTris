@@ -1,47 +1,23 @@
-### First try tetris by ActionHOSchT
+from config import Config
+from display import Display
 
-# necessary imports
-import pygame as pg
-
-
-#global variables
-width = 400
-columns = 10
-line = 20
-distance = width // columns
-height = distance * columns
-grid = [0]* columns* line
-weitermachen = True    #read go on
-
-# game ground
-pictures = []
-for n in range(8):
-    pictures.append(pg.transform.scale(pg.image.load('tetrisblock_{n}.gif')) #(f'tetrisblock_{n}.gif'),(distance,distance)))
-
-
-#show screen
-pg.init()
-screen = pg.display.set_mode([width, height])
-
+config = Config()
+display = Display()
+goOn = True
 
 # gameloop
 while goOn:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-        	weitermachen = False
-    screen.fill((0,0,0))
-    for n, color in enumerate(grid): # von 0 bis 199
-        if color > 0:
-            x = n % columns * distance
-            y = n // columns * distance
-            screen.blit(pictures[color],(x,y))
+    display.run()
+    for event in display.getEvents():
+        print("event type: %d" % event.type)
+        print("quit code: %d" % display.getPgQuitEvent())
+        print("\n")
+        if event.type == display.getPgQuitEvent():
+            display.quit()
+            goOn = False
+            break
 
-    pg.display.flip()
-
-
-pg.quit()
-
-# Spielfeld 
+# Spielfeld
 #
 # [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
 # [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
