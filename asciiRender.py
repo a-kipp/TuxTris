@@ -10,8 +10,5 @@ class ASCIIRender:
                 print("[%s]" % block, end='')
             print("")
 
-
-
-
 # falls belegt(1..7)[1||...7]
 # self.config.grid[1][3] = "1"

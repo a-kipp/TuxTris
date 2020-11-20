@@ -1,4 +1,6 @@
 from asciiRender import ASCIIRender
+
+
 class Display:
     def __init__(self):
         from tetris import config
@@ -6,11 +8,10 @@ class Display:
         if config.is_console_mode:
             self.ASCIIRender = ASCIIRender()
 
-
-            #show bash
+            # show bash
         else:
             pass
-            #pygameGui
+            # pygameGui
 
         # game ground
 
