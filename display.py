@@ -1,4 +1,4 @@
-from ASCIIRender import ASCIIRender
+from asciiRender import ASCIIRender
 class Display:
     def __init__(self):
         from tetris import config

@@ -7,8 +7,5 @@ class Config:
         self.blocksize = 40
         self.distance = self.width // self.columns
         self.height = self.distance * self.columns
-        self.grid = [0] * self.columns * self.line
-
-        # add test colours
-        self.grid[5] = 2
-        self.grid[6] = 3
+        self.grid = [[" " for x in range(self.columns)] for x in range(self.line)]
+        self.is_console_mode = True

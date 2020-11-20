@@ -5,6 +5,8 @@ config = Config()
 display = Display()
 goOn = True
 
+display.run()
+exit(0)
 # gameloop
 while goOn:
     display.run()
