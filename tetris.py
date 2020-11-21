@@ -6,18 +6,19 @@ display = Display()
 goOn = True
 
 display.run()
-exit(0)
+
 # gameloop
 while goOn:
-    display.run()
-    for event in display.getEvents():
-        print("event type: %d" % event.type)
-        print("quit code: %d" % display.getPgQuitEvent())
-        print("\n")
-        if event.type == display.getPgQuitEvent():
-            display.quit()
-            goOn = False
-            break
+    pass
+    #display.run()
+    #for event in display.getEvents():
+    #    print("event type: %d" % event.type)
+    #    print("quit code: %d" % display.getPgQuitEvent())
+    #    print("\n")
+    #    if event.type == display.getPgQuitEvent():
+    #        display.quit()
+    #        goOn = False
+    #        break
 
 # Spielfeld
 #
