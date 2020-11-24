@@ -2,25 +2,26 @@ import curses
 import threading
 from time import sleep
 
+
 class ASCIIRender:
     input_key = None
     thread_draw = None
     thread_keylistener = None
     stdscr = None
+    stop_threads = False
 
-    def __init__(self):
-        from tetris import config
-        self.config = config
+    def __init__(self, config):
+        self.grid = config.grid
 
     def run(self):
         self.thread_draw = threading.Thread(target=curses.wrapper, args=(self.draw,))
         self.thread_draw.start()
 
-        sleep(1)
-        self.thread_keylistener = threading.Thread(target=self.listenInput, args=(self.stdscr,))
-        self.thread_keylistener.start()
+        # sleep(1)
+        # self.thread_keylistener = threading.Thread(target=self.listenInput, args=(self.stdscr,))
+        # self.thread_keylistener.start()
 
-        #curses.wrapper(self.draw)
+        # curses.wrapper(self.draw)
         return
         # self.config.grid[1][3] = "1"
         # for line in self.config.grid:
@@ -28,9 +29,16 @@ class ASCIIRender:
         #        print("[%s]" % block, end='')
         #    print("")
 
+    def quit(self):
+        self.stop_threads = True
+        self.thread_draw.join()
+
     def listenInput(self, stdscr):
         while True:
             self.input_key = stdscr.getch()
+
+    def updateGrid(self, grid):
+        self.grid = grid
 
     def draw(self, stdscr):
         self.stdscr = stdscr
@@ -50,8 +58,13 @@ class ASCIIRender:
         # cursor_x = max(0, cursor_x)
         # cursor_x = min(width - 1, cursor_x)
 
-        while True:
+        while not self.stop_threads:
             sleep(0.1)
+            # for line in self.grid:
+            #     for block in line:
+            #         print("[%s]" % block, end='')
+            #     print("")
+            # continue
 
             # Initialization
             stdscr.clear()
@@ -59,7 +72,7 @@ class ASCIIRender:
             free_lines_before_grid = 1
 
             # Declaration of strings
-            title = "EazyTetrix - A TeamTux Game Project"[:width - 1]
+            title = "TuxTris - A TeamTux Game Project"[:width - 1]
             dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's'"
             command_prompt_text = "Type to control: "
@@ -75,7 +88,7 @@ class ASCIIRender:
             stdscr.attroff(curses.color_pair(2))
             stdscr.attroff(curses.A_BOLD)
 
-            for i, line in enumerate(self.config.grid):
+            for i, line in enumerate(self.grid):
                 cursor_y = i + free_lines_before_grid + 1
                 lineText = ""
                 for block in line:
@@ -97,9 +110,6 @@ class ASCIIRender:
 
             # Refresh the screen
             stdscr.refresh()
-
-
-
 
 # falls belegt(1..7)[1||...7]
 # self.config.grid[1][3] = "1"
