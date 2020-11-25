@@ -1,23 +1,53 @@
+import signal
+import random
+import time
 from config import Config
 from display import Display
 
-config = Config()
-display = Display()
-goOn = True
 
-display.run()
-exit(0)
-# gameloop
-while goOn:
-    display.run()
-    for event in display.getEvents():
-        print("event type: %d" % event.type)
-        print("quit code: %d" % display.getPgQuitEvent())
-        print("\n")
-        if event.type == display.getPgQuitEvent():
-            display.quit()
-            goOn = False
-            break
+class Tetris:
+
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.signal_handler)  # ^C
+        signal.signal(signal.SIGTERM, self.signal_handler)  # process termination
+
+        self.config = Config()
+        self.display = Display(self.config)
+        self.goOn = True
+
+    def getUpdatingTestingGrid(self):
+        self.config.grid[random.randint(0, self.config.line - 1)][random.randint(0, self.config.columns - 1)] = "X"
+        return self.config.grid
+
+    def run(self):
+        self.display.run()
+
+        # gameloop
+        while self.goOn:
+            self.display.updateGrid(self.getUpdatingTestingGrid())
+            time.sleep(0.1)
+            # display.run()
+            # for event in display.getEvents():
+            #    print("event type: %d" % event.type)
+            #    print("quit code: %d" % display.getPgQuitEvent())
+            #    print("\n")
+            #    if event.type == display.getPgQuitEvent():
+            #        display.quit()
+            #        goOn = False
+            #        break
+        self.display.quit()
+
+    def signal_handler(self, sig, frame):
+        """A custom signal handler to stop the game"""
+
+        print("Got Signal: %s " % sig)
+
+        if sig == signal.SIGINT or sig == signal.SIGTERM:
+            self.goOn = False
+
+
+if __name__ == '__main__':
+    Tetris().run()
 
 # Spielfeld
 #
