@@ -28,4 +28,5 @@ class Display:
 
     def quit(self):
         self.ASCIIRender.quit()
+
         pass

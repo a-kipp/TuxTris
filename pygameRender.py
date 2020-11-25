@@ -10,7 +10,8 @@ class Display:
         for n in range(1, 8):
             try:
                 self.config.pictures.append(
-                    pg.transform.scale(pg.image.load("res/tetrisblock_%d.gif" % n), (self.config.blocksize, self.config.blocksize)))
+                    pg.transform.scale(pg.image.load("res/tetrisblock_%d.gif" % n),
+                                       (self.config.blocksize, self.config.blocksize)))
             except FileNotFoundError as e:
                 print(e.errno)
 
