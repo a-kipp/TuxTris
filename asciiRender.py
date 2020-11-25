@@ -1,6 +1,6 @@
 import curses
 import threading
-from time import sleep
+import time
 
 
 class ASCIIRender:
@@ -11,7 +11,7 @@ class ASCIIRender:
     stop_threads = False
 
     def __init__(self, config):
-        self.grid = config.grid
+        self.config = config
 
     def run(self):
         self.thread_draw = threading.Thread(target=curses.wrapper, args=(self.draw,))
@@ -38,7 +38,7 @@ class ASCIIRender:
             self.input_key = stdscr.getch()
 
     def updateGrid(self, grid):
-        self.grid = grid
+        self.config.grid = grid
 
     def draw(self, stdscr):
         self.stdscr = stdscr
@@ -59,7 +59,8 @@ class ASCIIRender:
         # cursor_x = min(width - 1, cursor_x)
 
         while not self.stop_threads:
-            sleep(0.1)
+            time_A = time.time()
+
             # for line in self.grid:
             #     for block in line:
             #         print("[%s]" % block, end='')
@@ -88,7 +89,7 @@ class ASCIIRender:
             stdscr.attroff(curses.color_pair(2))
             stdscr.attroff(curses.A_BOLD)
 
-            for i, line in enumerate(self.grid):
+            for i, line in enumerate(self.config.grid):
                 cursor_y = i + free_lines_before_grid + 1
                 lineText = ""
                 for block in line:
@@ -108,8 +109,16 @@ class ASCIIRender:
 
             stdscr.move(cursor_y + 5, len(command_prompt_text) + 1)
 
+            # Define Framerate
+            time_B = time.time()
+            time.sleep(self.config.refresh_rate - (time_B - time_A))
+
+            stdscr.addstr(1, 0, str(self.config.refresh_rate - (time_B - time_A)))
+
             # Refresh the screen
             stdscr.refresh()
+
+
 
 # falls belegt(1..7)[1||...7]
 # self.config.grid[1][3] = "1"
