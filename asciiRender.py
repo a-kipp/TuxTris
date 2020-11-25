@@ -1,6 +1,7 @@
 import curses
 import threading
 import time
+import copy
 
 
 class ASCIIRender:
@@ -11,7 +12,7 @@ class ASCIIRender:
     stop_threads = False
 
     def __init__(self, config):
-        self.config = config
+        self.config = copy.deepcopy(config)
 
     def run(self):
         self.thread_draw = threading.Thread(target=curses.wrapper, args=(self.draw,))
@@ -117,8 +118,6 @@ class ASCIIRender:
 
             # Refresh the screen
             stdscr.refresh()
-
-
 
 # falls belegt(1..7)[1||...7]
 # self.config.grid[1][3] = "1"

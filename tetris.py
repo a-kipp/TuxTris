@@ -1,9 +1,8 @@
 import signal
-import random
 import time
-import datetime
 from config import Config
 from display import Display
+from gameLogic import GameLogic
 
 
 class Tetris:
@@ -14,11 +13,8 @@ class Tetris:
 
         self.config = Config()
         self.display = Display(self.config)
+        self.game_logic = GameLogic(self.config)
         self.goOn = True
-
-    def getUpdatingTestingGrid(self):
-        self.config.grid[random.randint(0, self.config.line - 1)][random.randint(0, self.config.columns - 1)] = "X"
-        return self.config.grid
 
     def run(self):
         self.display.run()
@@ -26,7 +22,7 @@ class Tetris:
         # gameloop
         while self.goOn:
             time_A = time.time()
-            self.display.updateGrid(self.getUpdatingTestingGrid())
+            self.display.updateGrid(self.game_logic.do_logic())
             time_B = time.time()
 
             time.sleep(self.config.refresh_rate - (time_B - time_A))

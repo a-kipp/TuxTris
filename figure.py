@@ -13,15 +13,39 @@ class Figure:
         6: [["6", "6"], ["6", "6"]],
         7: [["7"], ["7"], ["7"], ["7"]]
     }
+    # (x, y)
+    figure_positions = {
+        1: [(0, 0), (0, 1), (1, 1), (2, 1)]
+    }
     figure = None
     is_falling = None
 
-    def __init__(self):
-        self.figure = self.figures[random.randint(1, len(self.figures))]
+    def __init__(self, max_x, max_y):
+        self.max_x = max_x
+        self.max_y = max_y
+        # self.figure = self.figures[random.randint(1, len(self.figures))]
+        self.figure_id = 1
+        self.figure = self.figures[1]
+        self.figure_height = self.figure_positions[self.figure_id][len(self.figure_positions[self.figure_id]) - 1][1] + 1
+        self.y = 0
+        self.x = 3
+        # self.x = random.randint(0, max_x - len(self.figure[0]) - 1)
         is_falling = True
 
     def stop_falling(self):
         self.is_falling = False
+
+    def move_y(self):
+        if self.y < self.max_y - self.figure_height:
+            self.y += 1
+
+    def move_x(self):
+        self.x += 1
+
+    def draw(self, grid):
+        for pos in self.figure_positions[self.figure_id]:
+            grid[self.y + pos[1]][self.x + pos[0]] = "X"
+        return grid
 
     def rotate_right(self, steps=1):
         """ Rotate a tetris figure
