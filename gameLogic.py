@@ -18,4 +18,6 @@ class GameLogic:
             self.tetromino = Figure(self.config.columns, self.config.line)
         else:
             self.tetromino.move_y()
+            # self.tetromino.move_x(False)
+            # self.tetromino.rotate_right()
         return self.tetromino.draw(copy.deepcopy(self.config.grid))
