@@ -15,33 +15,44 @@ class Figure:
     figure = None
     is_falling = None
 
-    def __init__(self, max_x, max_y):
+    def __init__(self, max_x, max_y, config):
         self.max_x = max_x
         self.max_y = max_y
         self.figure = self.figures[random.randint(1, len(self.figures))]
         self.figure_height = self.figure[len(self.figure) - 1][1] + 1
         self.figure_width = self.figure[len(self.figure) - 1][0] + 1
-        self.y = 4
-        self.x = 3
-        # self.x = random.randint(0, max_x - len(self.figure[0]) - 1)
-        is_falling = True
+        self.config = config
+        self.destroy_me = False
+        self.x = random.randint(0, max_x - self.figure_width)
+        self.y = 0
 
     def update_dimensions(self):
         self.figure_height = self.figure[len(self.figure) - 1][1] + 1
         self.figure_width = self.figure[len(self.figure) - 1][0] + 1
 
-    def stop_falling(self):
-        self.is_falling = False
+    def check_collision(self):
+        for block in self.figure:
+            if self.x + block[0] == -1 or self.x + block[0] == self.max_x +1:
+                return True
+            if self.y + block[1] == self.max_y or self.config.grid[self.y + block[1]][self.x + block[0]] is not " ":
+                return True
+        return False
 
     def move_y(self):
-        if self.y < self.max_y - self.figure_height:
-            self.y += 1
+        self.y += 1
+        if self.check_collision():
+            self.y -= 1
+            for block in self.figure:
+                self.config.grid[self.y + block[1]][self.x + block[0]] = "X"
+            self.destroy_me = True
+
 
     def move_x(self, move_left=True):
         if move_left and self.x > 0:
             self.x -= 1
-        elif not move_left and self.x < self.max_x - self.figure_width:
+        if self.check_collision():
             self.x += 1
+
 
     def draw(self, grid):
         for pos in self.figure:
@@ -50,8 +61,12 @@ class Figure:
 
     def rotate_right(self):
         self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+        if self.check_collision():
+            self.rotate_left()
         self.update_dimensions()
 
     def rotate_left(self):
         self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+        if self.check_collision():
+            self.rotate_right()
         self.update_dimensions()

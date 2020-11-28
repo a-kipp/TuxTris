@@ -14,8 +14,8 @@ class GameLogic:
         return self.config.grid
 
     def do_logic(self):
-        if self.tetromino is None:
-            self.tetromino = Figure(self.config.columns, self.config.line)
+        if self.tetromino is None or self.tetromino.destroy_me:
+            self.tetromino = Figure(self.config.columns, self.config.line, self.config)
         else:
             self.tetromino.move_y()
             # self.tetromino.move_x(False)
