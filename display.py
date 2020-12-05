@@ -15,16 +15,22 @@ class Display:
         # game ground
 
     def run(self):
-        self.ASCIIRender.run()
+        if self.config.is_console_mode:
+            self.ASCIIRender.run()
 
     def updateGrid(self, grid):
-        self.ASCIIRender.updateGrid(grid)
+        if self.config.is_console_mode:
+            self.ASCIIRender.updateGrid(grid)
 
     def getEvents(self):
         pass
 
     def getPgQuitEvent(self):
         pass
+
+    def get_input_key(self):
+        if self.config.is_console_mode:
+            return self.ASCIIRender.input_key
 
     def quit(self):
         self.ASCIIRender.quit()
