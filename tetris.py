@@ -1,6 +1,7 @@
 import signal
 import random
 import time
+import datetime
 from config import Config
 from display import Display
 
@@ -24,8 +25,11 @@ class Tetris:
 
         # gameloop
         while self.goOn:
+            time_A = time.time()
             self.display.updateGrid(self.getUpdatingTestingGrid())
-            time.sleep(0.1)
+            time_B = time.time()
+
+            time.sleep(self.config.refresh_rate - (time_B - time_A))
             # display.run()
             # for event in display.getEvents():
             #    print("event type: %d" % event.type)
