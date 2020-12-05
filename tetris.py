@@ -1,7 +1,6 @@
 import signal
 import random
 import time
-import datetime
 from config import Config
 from display import Display
 
@@ -26,6 +25,10 @@ class Tetris:
         # gameloop
         while self.goOn:
             time_A = time.time()
+
+            #todo: link to gamelogic (turn/move)
+            #self.display.get_input_key()
+
             self.display.updateGrid(self.getUpdatingTestingGrid())
             time_B = time.time()
 
