@@ -35,14 +35,14 @@ class ASCIIRender:
         self.thread_draw.join()
 
     def listenInput(self, stdscr):
-        while True:
-            self.input_key = stdscr.getch()
+        self.input_key = stdscr.getch()
 
     def updateGrid(self, grid):
         self.config.grid = grid
 
     def draw(self, stdscr):
         self.stdscr = stdscr
+        stdscr.nodelay(True)
         cursor_x = 0
         cursor_y = 0
 
@@ -62,6 +62,8 @@ class ASCIIRender:
         while not self.stop_threads:
             time_A = time.time()
 
+            self.listenInput(stdscr)
+
             # for line in self.grid:
             #     for block in line:
             #         print("[%s]" % block, end='')
@@ -77,7 +79,7 @@ class ASCIIRender:
             title = "TuxTris - A TeamTux Game Project"[:width - 1]
             dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's'"
-            command_prompt_text = "Type to control: "
+            command_prompt_text = "Type to control: " + str(self.input_key)
 
             # Turning on attributes for title
             stdscr.attron(curses.color_pair(2))

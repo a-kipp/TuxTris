@@ -22,10 +22,10 @@ class Tetris:
         # gameloop
         while self.goOn:
             time_A = time.time()
-            self.display.updateGrid(self.game_logic.do_logic())
-            #self.game_logic.do_logic()
-            time_B = time.time()
 
+            self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
+
+            time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
             # display.run()
             # for event in display.getEvents():
