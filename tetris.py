@@ -17,13 +17,19 @@ class Tetris:
         self.goOn = True
 
     def run(self):
-        self.display.run()
+        #self.display.run()
+
+        #inputs = [100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100]
+        inputs = [115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115]
+        i = 0
 
         # gameloop
         while self.goOn:
             time_A = time.time()
 
-            self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
+            self.game_logic.do_logic(inputs[i])
+            #self.display.updateGrid(self.game_logic.do_logic(inputs[i]))
+            #self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
 
             time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
@@ -36,6 +42,7 @@ class Tetris:
             #        display.quit()
             #        goOn = False
             #        break
+            i += 1
         self.display.quit()
 
     def signal_handler(self, sig, frame):

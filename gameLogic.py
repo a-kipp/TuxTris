@@ -30,5 +30,6 @@ class GameLogic:
                 # rotate
                 self.tetromino.rotate_right()
             self.tetromino.move_y()
+            print(self.tetromino.x)
 
         return self.tetromino.draw(copy.deepcopy(self.config.grid))
