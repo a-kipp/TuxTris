@@ -23,6 +23,9 @@ class GameLogic:
             if input_key == 100:
                 # move right
                 self.tetromino.move_x(False)
+            if input_key == 115:
+                # move down
+                self.tetromino.move_down()
             if input_key == 119:
                 # rotate
                 self.tetromino.rotate_right()
