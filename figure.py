@@ -32,7 +32,7 @@ class Figure:
 
     def check_collision(self):
         for block in self.figure:
-            if self.x + block[0] == -1 or self.x + block[0] == self.max_x +1:
+            if self.x + block[0] == -1 or self.x + block[0] == self.max_x + 1:
                 return True
             if self.y + block[1] == self.max_y or self.config.grid[self.y + block[1]][self.x + block[0]] is not " ":
                 return True
@@ -46,13 +46,15 @@ class Figure:
                 self.config.grid[self.y + block[1]][self.x + block[0]] = "X"
             self.destroy_me = True
 
-
     def move_x(self, move_left=True):
         if move_left and self.x > 0:
             self.x -= 1
-        if self.check_collision():
+            if self.check_collision():
+                self.x += 1
+        elif not move_left and (self.x + self.figure_width) < self.max_x:
             self.x += 1
-
+            if self.check_collision():
+                self.x -= 1
 
     def draw(self, grid):
         for pos in self.figure:
