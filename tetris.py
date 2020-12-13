@@ -22,8 +22,13 @@ class Tetris:
         # gameloop
         while self.goOn:
             time_A = time.time()
+
+            # todo: link to gamelogic (turn/move)
+            # self.display.get_input_key()
+
             self.display.updateGrid(self.game_logic.do_logic())
             #self.game_logic.do_logic()
+
             time_B = time.time()
 
             time.sleep(self.config.refresh_rate - (time_B - time_A))
