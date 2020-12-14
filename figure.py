@@ -48,74 +48,86 @@ class Figure:
                 return True
         return False
 
-    def collision_deflect(self):
-        # if figure outside grid move towards mid
+
+    def wall_deflect(self):
         colli = True
         while colli:
             colli = False
             for block in self.figure:
                 print("self.y: %d" % self.y)
                 print("block: %d" % block[1])
-                if self.x + block[0] == -1:
+                if self.x + block[0] < 0:
                     self.x += 1
                     colli = True
-                if self.x + block[0] == self.max_x + 1:
+                if self.x + block[0] > self.max_x:
                     self.x -= 1
                     colli = True
-                #if self.y + block[1] == self.max_y:
-                #    self.y += 1
-                #    colli = True
-                #if (self.y + block[1]) >= len(self.config.grid):
-                #    print("x1")
-                #    self.check_collision()
-                #    colli = True
-               # if (self.x + block[0]) >= len(self.config.grid[self.y + block[1]]):
-                #    print("x2")
-                #    self.y -= 1
-                #    colli = True
-                #if self.config.grid[self.y + block[1]][self.x + block[0]] != " ":
-                #    print("x3")
-                #   self.y -= 1
-                #    colli = True
+                if self.y + block[1] < 0:
+                    self.y += 1
+                    colli = True
 
-    def burnblablabla(self):
+
+    def collison_detect(self):
         for block in self.figure:
-            self.config.grid[self.y + block[1]][self.x + block[0]] = "X"
-        self.destroy_me = True
+            if self.config.grid[self.y + block[1]][self.x + block[0]] == "X":
+                return True
+        return False
 
-    def move_down(self):
-        while not self.check_collision():
-            self.y += 1
-        self.check_collision()
-        self.burnblablabla()
 
     def move_y(self):
-        self.y += 1
-        if self.check_collision():
-            self.collision_deflect()
-            self.burnblablabla()
+        moved = self
+        moved.y += 1
+        if moved.collison_detect():
+            self.destroy_me = True
+        elif moved.y > self.max_y:
+            self.destroy_me = True
+        else:
+            self = moved
 
-    def move_x(self, move_left=True):
-        if move_left and self.x > 0:
-            self.x -= 1
-            if self.check_collision():
-                self.collision_deflect()
-        elif not move_left and (self.x + self.figure_width) < self.max_x:
-            self.x += 1
-            if self.check_collision():
-                self.collision_deflect()
+
+    def move_down(self):
+        while True:
+            self.move_y()
+
+
+    def move_right(self):
+        moved = self
+        moved.x += 1
+        moved.wall_deflect()
+        if not moved.collison_detect():
+            self = moved
+
+
+    def move_left(self):
+        moved = self
+        moved.x -= 1
+        moved.wall_deflect()
+        if not moved.collison_detect():
+            self = moved
+
 
     def draw(self, grid):
         for pos in self.figure:
             grid[self.y + pos[1]][self.x + pos[0]] = "X"
         return grid
 
+
     def rotate_right(self):
-        self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
-        self.collision_deflect()
-        self.update_dimensions()
+        rotated = self
+        rotated.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+        rotated.wall_deflect()
+        if not rotated.collison_detect():
+            self = rotated
+
 
     def rotate_left(self):
-        self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
-        self.collision_deflect()
-        self.update_dimensions()
+        rotated = self
+        rotated.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+        rotated.wall_deflect()
+        if not rotated.collison_detect():
+            self = rotated
+
+
+
+
+
