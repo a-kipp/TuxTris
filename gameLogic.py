@@ -26,6 +26,5 @@ class GameLogic:
             if input_key == 119:
                 self.tetromino.rotate_right()
             self.tetromino.move_step_down()
-            print(self.tetromino.y)
 
         return self.tetromino.draw(copy.deepcopy(self.config.grid))

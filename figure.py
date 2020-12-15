@@ -43,8 +43,6 @@ class Figure:
         is_outside_boundaries = True
         while is_outside_boundaries:
             for block in self.figure:
-                print("self.y: %d" % self.y)
-                print("block: %d" % block[1])
                 if self.x + block[0] < 0:
                     self.x += 1
                     continue
@@ -72,9 +70,7 @@ class Figure:
                 self.destroy_me()
                 break
         if not self.is_dead:
-            print("something")
             if moved.is_colliding():
-
                 self.destroy_me()
             else:
                 self = moved
