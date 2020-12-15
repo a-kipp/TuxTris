@@ -17,23 +17,23 @@ class Tetris:
         self.goOn = True
 
     def run(self):
-        #self.display.run()
+        self.display.run()
 
         #inputs = [100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100, 119, 100, 100]
-        inputs = [115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115]
+        #inputs = [115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115]
         i = 0
 
         # gameloop
         while self.goOn:
             time_A = time.time()
 
-            self.game_logic.do_logic(inputs[i])
+            #self.game_logic.do_logic(inputs[i])
             #self.display.updateGrid(self.game_logic.do_logic(inputs[i]))
-            #self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
+            self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
 
             time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
-            # display.run()
+            #display.run()
             # for event in display.getEvents():
             #    print("event type: %d" % event.type)
             #    print("quit code: %d" % display.getPgQuitEvent())

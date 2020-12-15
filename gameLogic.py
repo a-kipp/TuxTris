@@ -14,22 +14,18 @@ class GameLogic:
         return self.config.grid
 
     def do_logic(self, input_key):
-        if self.tetromino is None or self.tetromino.destroy_me:
+        if self.tetromino is None or self.tetromino.is_dead:
             self.tetromino = Figure(self.config.columns, self.config.line, self.config)
         else:
-            if input_key == 97:
-                # move left
-                self.tetromino.move_x()
             if input_key == 100:
-                # move right
-                self.tetromino.move_x(False)
+                self.tetromino.move_right()
+            if input_key == 97:
+                self.tetromino.move_left()
             if input_key == 115:
-                # move down
-                self.tetromino.move_down()
+                self.tetromino.move_to_bottom()
             if input_key == 119:
-                # rotate
                 self.tetromino.rotate_right()
-            self.tetromino.move_y()
-            print(self.tetromino.x)
+            self.tetromino.move_step_down()
+            print(self.tetromino.y)
 
         return self.tetromino.draw(copy.deepcopy(self.config.grid))
