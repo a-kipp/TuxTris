@@ -15,7 +15,6 @@ class Figure:
     figure = None
     is_falling = None
 
-
     def __init__(self, max_x, max_y, config):
         self.max_x = max_x
         self.max_y = max_y
@@ -26,35 +25,18 @@ class Figure:
         self.is_dead = False
         self.x = random.randint(0, max_x - self.figure_width)
         self.y = 0
-        #if self.is_colliding():
-        #    quit()
-
+        if self.is_colliding():
+            quit()
 
     def update_dimensions(self):
         self.figure_height = self.figure[len(self.figure) - 1][1] + 1
         self.figure_width = self.figure[len(self.figure) - 1][0] + 1
 
-
-#    def check_collision(self):
-#        for block in self.figure:
-#            #if self.x + block[0] == -1 or self.x + block[0] == self.max_x + 1:
-#            #    return True
-#            if (self.y + block[1]) < len(self.config.grid) and (self.x + block[0]) < len(self.config.grid[self.y + block[1]]):
-#                if self.y + block[1] == self.max_y or self.config.grid[self.y + block[1]][self.x + block[0]] != " ":
-#                    # loop to move the figure up
-#                    #while
-#                    self.burnblablabla()
-#                    return True
-#            else:
-#
-#                return True
-#        return False
     def destroy_me(self):
         self.y -= 1
         for block in self.figure:
             self.config.grid[self.y + block[1]][self.x + block[0]] = "X"
         self.is_dead = True
-
 
     def pushback_to_grid(self):
         """push the tetromino back to the grid if partially or fully outside of boundaries"""
@@ -74,14 +56,12 @@ class Figure:
                     continue
                 is_outside_boundaries = False
 
-
     def is_colliding(self):
         """check for collision with settled tetrominos on the grid"""
         for block in self.figure:
             if self.config.grid[self.y + block[1]][self.x + block[0]] == "X":
                 return True
         return False
-
 
     def move_step_down(self):
         self.pushback_to_grid()
@@ -91,17 +71,17 @@ class Figure:
             if self.y + block[1] >= self.max_y:
                 self.destroy_me()
                 break
-        if not self.destroy_me:
+        if not self.is_dead:
+            print("something")
             if moved.is_colliding():
+
                 self.destroy_me()
             else:
                 self = moved
 
-
     def move_to_bottom(self):
-        while not self.destroy_me:
+        while not self.is_dead:
             self.move_step_down()
-
 
     def move_right(self):
         moved = self
@@ -110,14 +90,12 @@ class Figure:
         if not moved.is_colliding():
             self = moved
 
-
     def move_left(self):
         moved = self
         moved.x -= 1
         moved.pushback_to_grid()
         if not moved.is_colliding():
             self = moved
-
 
     def rotate_right(self):
         rotated = self
@@ -126,14 +104,12 @@ class Figure:
         if not rotated.is_colliding():
             self = rotated
 
-
     def rotate_left(self):
         rotated = self
         rotated.figure = [(-rotated.figure[i][1], rotated.figure[i][0]) for i in range(len(rotated.figure))]
         rotated.pushback_to_grid()
         if not rotated.is_colliding():
             self = rotated
-
 
     def draw(self, grid):
         for pos in self.figure:
