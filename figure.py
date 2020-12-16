@@ -62,18 +62,19 @@ class Figure:
         return False
 
     def move_step_down(self):
-        self.pushback_to_grid()
-        moved = self
-        moved.y += 1
-        for block in self.figure:
-            if self.y + block[1] >= self.max_y:
-                self.destroy_me()
-                break
         if not self.is_dead:
-            if moved.is_colliding():
-                self.destroy_me()
-            else:
-                self = moved
+            self.pushback_to_grid()
+            moved = self
+            moved.y += 1
+            for block in self.figure:
+                if self.y + block[1] >= self.max_y:
+                    self.destroy_me()
+                    break
+            if not self.is_dead:
+                if moved.is_colliding():
+                    self.destroy_me()
+                else:
+                    self = moved
 
     def move_to_bottom(self):
         while not self.is_dead:
@@ -94,18 +95,20 @@ class Figure:
             self = moved
 
     def rotate_right(self):
-        rotated = self
-        rotated.figure = [(rotated.figure[i][1], -rotated.figure[i][0]) for i in range(len(rotated.figure))]
-        rotated.pushback_to_grid()
-        if not rotated.is_colliding():
-            self = rotated
+        if self.y+1 >= self.figure_width:
+            rotated = self
+            rotated.figure = [(rotated.figure[i][1], -rotated.figure[i][0]) for i in range(len(rotated.figure))]
+            rotated.pushback_to_grid()
+            if not rotated.is_colliding():
+                self = rotated
 
     def rotate_left(self):
-        rotated = self
-        rotated.figure = [(-rotated.figure[i][1], rotated.figure[i][0]) for i in range(len(rotated.figure))]
-        rotated.pushback_to_grid()
-        if not rotated.is_colliding():
-            self = rotated
+        if self.y+1 >= self.figure_width:
+            rotated = self
+            rotated.figure = [(-rotated.figure[i][1], rotated.figure[i][0]) for i in range(len(rotated.figure))]
+            rotated.pushback_to_grid()
+            if not rotated.is_colliding():
+                self = rotated
 
     def draw(self, grid):
         for pos in self.figure:
