@@ -1,4 +1,5 @@
 import random
+import sys
 
 
 class Figure:
@@ -64,51 +65,48 @@ class Figure:
     def move_step_down(self):
         if not self.is_dead:
             self.pushback_to_grid()
-            moved = self
-            moved.y += 1
+            self.y += 1
             for block in self.figure:
                 if self.y + block[1] >= self.max_y:
                     self.destroy_me()
                     break
             if not self.is_dead:
-                if moved.is_colliding():
+                if self.is_colliding():
                     self.destroy_me()
-                else:
-                    self = moved
 
     def move_to_bottom(self):
         while not self.is_dead:
             self.move_step_down()
 
     def move_right(self):
-        moved = self
-        moved.x += 1
-        moved.pushback_to_grid()
-        if not moved.is_colliding():
-            self = moved
+        self.x += 1
+        self.pushback_to_grid()
+        if self.is_colliding():
+            self.x -= 1
 
     def move_left(self):
-        moved = self
-        moved.x -= 1
-        moved.pushback_to_grid()
-        if not moved.is_colliding():
-            self = moved
+        self.x -= 1
+        self.pushback_to_grid()
+        if self.is_colliding():
+            self.x += 1
 
     def rotate_right(self):
-        if self.y+1 >= self.figure_width:
-            rotated = self
-            rotated.figure = [(rotated.figure[i][1], -rotated.figure[i][0]) for i in range(len(rotated.figure))]
-            rotated.pushback_to_grid()
-            if not rotated.is_colliding():
-                self = rotated
+        if self.y + 1 >= self.figure_width:
+            self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+            self.pushback_to_grid()
+            if self.is_colliding():
+                # force rotate left
+                self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+                self.pushback_to_grid()
 
     def rotate_left(self):
-        if self.y+1 >= self.figure_width:
-            rotated = self
-            rotated.figure = [(-rotated.figure[i][1], rotated.figure[i][0]) for i in range(len(rotated.figure))]
-            rotated.pushback_to_grid()
-            if not rotated.is_colliding():
-                self = rotated
+        if self.y + 1 >= self.figure_width:
+            self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+            self.pushback_to_grid()
+            if self.is_colliding():
+                # force rotate right
+                self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+                self.pushback_to_grid()
 
     def draw(self, grid):
         for pos in self.figure:
