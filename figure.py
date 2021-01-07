@@ -1,5 +1,4 @@
 import random
-import sys
 
 
 class Figure:
@@ -11,7 +10,7 @@ class Figure:
         4: [(0, 1), (1, 0), (1, 1), (2, 0)],
         5: [(0, 1), (1, 0), (1, 1), (2, 1)],
         6: [(0, 0), (0, 1), (1, 0), (1, 1)],
-        7: [(0, 0), (0, 1), (0, 2), (0, 3)]
+        7: [(0, 0), (0, 1), (0, 2), (0, 3)],
     }
     figure = None
     is_falling = None
@@ -92,20 +91,28 @@ class Figure:
 
     def rotate_right(self):
         if self.y + 1 >= self.figure_width:
-            self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+            self.figure = [
+                (self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))
+            ]
             self.pushback_to_grid()
             if self.is_colliding():
                 # force rotate left
-                self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+                self.figure = [
+                    (-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))
+                ]
                 self.pushback_to_grid()
 
     def rotate_left(self):
         if self.y + 1 >= self.figure_width:
-            self.figure = [(-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))]
+            self.figure = [
+                (-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))
+            ]
             self.pushback_to_grid()
             if self.is_colliding():
                 # force rotate right
-                self.figure = [(self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))]
+                self.figure = [
+                    (self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))
+                ]
                 self.pushback_to_grid()
 
     def draw(self, grid):

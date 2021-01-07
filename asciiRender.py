@@ -1,7 +1,7 @@
+import copy
 import curses
 import threading
 import time
-import copy
 
 
 class ASCIIRender:
@@ -43,7 +43,6 @@ class ASCIIRender:
     def draw(self, stdscr):
         self.stdscr = stdscr
         stdscr.nodelay(True)
-        cursor_x = 0
         cursor_y = 0
 
         # Clear and refresh the screen for a blank canvas
@@ -97,7 +96,6 @@ class ASCIIRender:
                 lineText = ""
                 for block in line:
                     lineText = lineText + ("[%s]" % block)
-                i = i + 1
 
                 stdscr.addstr(cursor_y, 1, lineText)
 
