@@ -63,12 +63,6 @@ class ASCIIRender:
 
             self.listenInput(stdscr)
 
-            # for line in self.grid:
-            #     for block in line:
-            #         print("[%s]" % block, end='')
-            #     print("")
-            # continue
-
             # Initialization
             stdscr.clear()
             height, width = stdscr.getmaxyx()
@@ -118,6 +112,3 @@ class ASCIIRender:
 
             # Refresh the screen
             stdscr.refresh()
-
-# falls belegt(1..7)[1||...7]
-# self.config.grid[1][3] = "1"
