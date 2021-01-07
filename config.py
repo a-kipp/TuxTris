@@ -7,6 +7,6 @@ class Config:
         self.blocksize = 40
         self.distance = self.width // self.columns
         self.height = self.distance * self.columns
-        self.grid = [[" " for x in range(self.columns)] for x in range(self.line)]
+        self.grid = [[" " for _ in range(self.columns)] for _ in range(self.line)]
         self.is_console_mode = True
-        self.refresh_rate = 0.015 #PC-Masterrace
+        self.refresh_rate = 0.25  # PC-Masterrace

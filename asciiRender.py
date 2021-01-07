@@ -1,3 +1,4 @@
+import copy
 import curses
 import threading
 import time
@@ -11,7 +12,7 @@ class ASCIIRender:
     stop_threads = False
 
     def __init__(self, config):
-        self.config = config
+        self.config = copy.deepcopy(config)
 
     def run(self):
         self.thread_draw = threading.Thread(target=curses.wrapper, args=(self.draw,))
@@ -42,7 +43,6 @@ class ASCIIRender:
     def draw(self, stdscr):
         self.stdscr = stdscr
         stdscr.nodelay(True)
-        cursor_x = 0
         cursor_y = 0
 
         # Clear and refresh the screen for a blank canvas
@@ -62,12 +62,6 @@ class ASCIIRender:
             time_A = time.time()
 
             self.listenInput(stdscr)
-
-            # for line in self.grid:
-            #     for block in line:
-            #         print("[%s]" % block, end='')
-            #     print("")
-            # continue
 
             # Initialization
             stdscr.clear()
@@ -96,7 +90,6 @@ class ASCIIRender:
                 lineText = ""
                 for block in line:
                     lineText = lineText + ("[%s]" % block)
-                i = i + 1
 
                 stdscr.addstr(cursor_y, 1, lineText)
 
@@ -119,7 +112,3 @@ class ASCIIRender:
 
             # Refresh the screen
             stdscr.refresh()
-
-
-# falls belegt(1..7)[1||...7]
-# self.config.grid[1][3] = "1"
