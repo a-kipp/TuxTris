@@ -1,6 +1,5 @@
 import copy
 import random
-import sys
 
 from figure import Figure
 

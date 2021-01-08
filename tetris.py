@@ -35,8 +35,6 @@ class Tetris:
                     self.goOn = False
                 else:
                     traceback.print_exc()
-            except:
-                traceback.print_exc()
 
             time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
