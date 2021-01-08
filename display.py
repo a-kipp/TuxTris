@@ -22,6 +22,14 @@ class Display:
         if self.config.is_console_mode:
             self.ASCIIRender.updateGrid(grid)
 
+    def updateScore(self, score):
+        if self.config.is_console_mode:
+            self.ASCIIRender.updateScore(score)
+
+    def set_game_ended(self, has_ended):
+        if self.config.is_console_mode:
+            self.ASCIIRender.setGameEnded(has_ended)
+
     def getEvents(self):
         pass
 

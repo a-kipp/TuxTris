@@ -30,9 +30,12 @@ class Tetris:
 
             try:
                 self.display.updateGrid(self.game_logic.do_logic(input_key))
+                self.display.updateScore(self.game_logic.get_score())
             except Exception as e:
                 if str(e).strip() == "Initial collision":
-                    self.goOn = False
+                    # self.goOn = False
+                    self.game_logic.set_game_ended(True)
+                    self.display.set_game_ended(True)
                 else:
                     traceback.print_exc()
 
