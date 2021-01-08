@@ -81,6 +81,7 @@ class ASCIIRender:
             dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's', quit 'q'"
             command_prompt_text = "Your score: %d" % self.score
+            game_ended_text = "Game ended! - " + command_prompt_text
 
             # Turning on attributes for title
             stdscr.attron(curses.color_pair(2))
@@ -94,7 +95,7 @@ class ASCIIRender:
             stdscr.attroff(curses.A_BOLD)
 
             if self.game_ended:
-                stdscr.addstr(free_lines_before_grid + 10, 0, "Game ended! - " + command_prompt_text, curses.color_pair(3))
+                stdscr.addstr(free_lines_before_grid + 10, 0, game_ended_text, curses.color_pair(3))
             else:
                 for i, line in enumerate(self.config.grid):
                     cursor_y = i + free_lines_before_grid + 1
