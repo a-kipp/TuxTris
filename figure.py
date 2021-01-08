@@ -26,7 +26,7 @@ class Figure:
         self.x = random.randint(0, max_x - self.figure_width)
         self.y = 0
         if self.is_colliding():
-            quit()
+            raise Exception("Initial collision")
 
     def update_dimensions(self):
         self.figure_height = self.figure[len(self.figure) - 1][1] + 1

@@ -71,7 +71,7 @@ class ASCIIRender:
             # Declaration of strings
             title = "TuxTris - A TeamTux Game Project"[:width - 1]
             dimensions = "Width: {}, Height: {}".format(width, height)
-            short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's'"
+            short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's', quit 'q'"
             command_prompt_text = "Type to control: " + str(self.input_key)
 
             # Turning on attributes for title

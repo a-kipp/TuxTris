@@ -1,5 +1,6 @@
-import random
 import copy
+import random
+
 from figure import Figure
 
 
@@ -27,5 +28,8 @@ class GameLogic:
                 self.tetromino.rotate_right()
 
             self.tetromino.move_step_down()
+
+            if self.tetromino is not None and self.tetromino.y <= 0:
+                raise Exception("Initial collision")
 
         return self.tetromino.draw(copy.deepcopy(self.config.grid))

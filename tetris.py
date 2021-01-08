@@ -1,5 +1,6 @@
 import signal
 import time
+import traceback
 
 from config import Config
 from display import Display
@@ -22,7 +23,18 @@ class Tetris:
         while self.goOn:
             time_A = time.time()
 
-            self.display.updateGrid(self.game_logic.do_logic(self.display.get_input_key()))
+            input_key = self.display.get_input_key()
+            if input_key == 113:
+                # quit
+                self.goOn = False
+
+            try:
+                self.display.updateGrid(self.game_logic.do_logic(input_key))
+            except Exception as e:
+                if str(e).strip() == "Initial collision":
+                    self.goOn = False
+                else:
+                    traceback.print_exc()
 
             time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
