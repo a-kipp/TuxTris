@@ -9,4 +9,5 @@ class Config:
         self.height = self.distance * self.columns
         self.grid = [[" " for _ in range(self.columns)] for _ in range(self.line)]
         self.is_console_mode = True
-        self.refresh_rate = 0.25  # PC-Masterrace
+        self.falling_rate = 0.3
+        self.refresh_rate = 0.03  # PC-Masterrace
