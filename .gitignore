@@ -2,3 +2,5 @@
 idea.sublime-workspace
 venv
 __pycache__
+dist
+build
