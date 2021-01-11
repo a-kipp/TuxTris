@@ -10,6 +10,8 @@ class ASCIIRender:
     thread_keylistener = None
     stdscr = None
     stop_threads = False
+    score = 0
+    game_ended = False
 
     def __init__(self, config):
         self.config = copy.deepcopy(config)
@@ -39,6 +41,12 @@ class ASCIIRender:
 
     def updateGrid(self, grid):
         self.config.grid = grid
+
+    def updateScore(self, score):
+        self.score = score
+
+    def setGameEnded(self, has_ended):
+        self.game_ended = has_ended
 
     def draw(self, stdscr):
         self.stdscr = stdscr
@@ -72,7 +80,8 @@ class ASCIIRender:
             title = "TuxTris - A TeamTux Game Project"[:width - 1]
             dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's', quit 'q'"
-            command_prompt_text = "Type to control: " + str(self.input_key)
+            command_prompt_text = "Your score: %d" % self.score
+            game_ended_text = "Game ended! - " + command_prompt_text
 
             # Turning on attributes for title
             stdscr.attron(curses.color_pair(2))
@@ -85,13 +94,16 @@ class ASCIIRender:
             stdscr.attroff(curses.color_pair(2))
             stdscr.attroff(curses.A_BOLD)
 
-            for i, line in enumerate(self.config.grid):
-                cursor_y = i + free_lines_before_grid + 1
-                lineText = ""
-                for block in line:
-                    lineText = lineText + ("[%s]" % block)
+            if self.game_ended:
+                stdscr.addstr(free_lines_before_grid + 10, 0, game_ended_text, curses.color_pair(3))
+            else:
+                for i, line in enumerate(self.config.grid):
+                    cursor_y = i + free_lines_before_grid + 1
+                    lineText = ""
+                    for block in line:
+                        lineText = lineText + ("[%s]" % block)
 
-                stdscr.addstr(cursor_y, 1, lineText)
+                    stdscr.addstr(cursor_y, 1, lineText)
 
             # Render short help text
             stdscr.addstr(cursor_y + 3, 0, short_help, curses.color_pair(1))
