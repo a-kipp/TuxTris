@@ -10,4 +10,4 @@ class Config:
         self.grid = [[" " for _ in range(self.columns)] for _ in range(self.line)]
         self.is_console_mode = True
         self.falling_rate = 0.3
-        self.refresh_rate = 0.03  # PC-Masterrace
+        self.refresh_rate = 0.014  # PC-Masterrace
