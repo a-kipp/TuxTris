@@ -6,3 +6,4 @@
 - Gemeinsam coden (Turnus)
 - Treffen/Arbeiten mindestens 1x pro Woche
 - PEP8 Style Guide für Python Code
+- Dokumentationen und Präsentationen befinden sich im docs Ordner
