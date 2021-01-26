@@ -20,17 +20,7 @@ class ASCIIRender:
         self.thread_draw = threading.Thread(target=curses.wrapper, args=(self.draw,))
         self.thread_draw.start()
 
-        # sleep(1)
-        # self.thread_keylistener = threading.Thread(target=self.listenInput, args=(self.stdscr,))
-        # self.thread_keylistener.start()
-
-        # curses.wrapper(self.draw)
         return
-        # self.config.grid[1][3] = "1"
-        # for line in self.config.grid:
-        #    for block in line:
-        #        print("[%s]" % block, end='')
-        #    print("")
 
     def quit(self):
         self.stop_threads = True
@@ -63,9 +53,6 @@ class ASCIIRender:
         curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-        # cursor_x = max(0, cursor_x)
-        # cursor_x = min(width - 1, cursor_x)
-
         while not self.stop_threads:
             time_A = time.time()
 
@@ -78,10 +65,11 @@ class ASCIIRender:
 
             # Declaration of strings
             title = "TuxTris - A TeamTux Game Project"[:width - 1]
-            dimensions = "Width: {}, Height: {}".format(width, height)
+            # dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's', quit 'q'"
             command_prompt_text = "Your score: %d" % self.score
             game_ended_text = "Game ended! - " + command_prompt_text
+            window_too_small_text = "Window to small, at least 27 lines required!"
 
             # Turning on attributes for title
             stdscr.attron(curses.color_pair(2))
@@ -94,33 +82,41 @@ class ASCIIRender:
             stdscr.attroff(curses.color_pair(2))
             stdscr.attroff(curses.A_BOLD)
 
-            if self.game_ended:
-                stdscr.addstr(free_lines_before_grid + 10, 0, game_ended_text, curses.color_pair(3))
+            if height >= 27:
+                try:
+                    if self.game_ended:
+                        stdscr.addstr(free_lines_before_grid + 10, 0, game_ended_text, curses.color_pair(3))
+                    else:
+                        for i, line in enumerate(self.config.grid):
+                            cursor_y = i + free_lines_before_grid + 1
+                            lineText = ""
+                            for block in line:
+                                lineText = lineText + ("[%s]" % block)
+
+                            stdscr.addstr(cursor_y, 1, lineText)
+
+                    # Render short help text
+                    stdscr.addstr(cursor_y + 3, 0, short_help, curses.color_pair(1))
+
+                    # Render command prompt
+                    stdscr.addstr(cursor_y + 5, 0, command_prompt_text, curses.color_pair(3))
+
+                    # Render dimensions text (only for debugging)
+                    # stdscr.addstr(height - 1, 0, dimensions, curses.color_pair(1))
+
+                    stdscr.move(cursor_y + 5, len(command_prompt_text) + 1)
+                except Exception as e:
+                    if str(e).strip() == "_curses.error":
+                        stdscr.addstr(1, 0, str(e).strip())
             else:
-                for i, line in enumerate(self.config.grid):
-                    cursor_y = i + free_lines_before_grid + 1
-                    lineText = ""
-                    for block in line:
-                        lineText = lineText + ("[%s]" % block)
-
-                    stdscr.addstr(cursor_y, 1, lineText)
-
-            # Render short help text
-            stdscr.addstr(cursor_y + 3, 0, short_help, curses.color_pair(1))
-
-            # Render command prompt
-            stdscr.addstr(cursor_y + 5, 0, command_prompt_text, curses.color_pair(3))
-
-            # Render dimensions text
-            stdscr.addstr(height - 1, 0, dimensions, curses.color_pair(1))
-
-            stdscr.move(cursor_y + 5, len(command_prompt_text) + 1)
+                stdscr.addstr(1, 0, window_too_small_text)
 
             # Define Framerate
             time_B = time.time()
             time.sleep(self.config.refresh_rate - (time_B - time_A))
 
-            stdscr.addstr(1, 0, str(self.config.refresh_rate - (time_B - time_A)))
+            # Add refresh rate delay to the display (only for debugging)
+            # stdscr.addstr(1, 0, str(self.config.refresh_rate - (time_B - time_A)))
 
             # Refresh the screen
             stdscr.refresh()
