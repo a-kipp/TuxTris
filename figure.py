@@ -4,11 +4,13 @@ import random
 class Figure:
     # (x, y)
     figures = {
-        1: [(-1, 0), (0, 0), (1, 0), (1, 1)], # L-shape
-        2: [(0, -1), (0, 0), (1, 0), (1, 1)], # S-shape
-        3: [(0, 0), (0, -1), (0, 1), (1, 0)], # T-shape
-        4: [(0, 0), (0, 1), (1, 0), (1, 1)], # square
-        5: [(0, -1), (0, 0), (0, 1), (0, 2)], # straight bar
+        1: [(-1, 0), (0, 0), (1, 0), (1, 1)],  # L-shape left-handed
+        2: [(-1, 0), (0, 0), (1, 0), (1, -1)],  # L-shape right-handed
+        3: [(0, 0), (0, -1), (1, -1), (-1, 0)],  # S-shape left-handed
+        4: [(0, 0), (0, 1), (1, 1), (-1, 0)],  # S-shape right-handed
+        5: [(0, 0), (0, -1), (0, 1), (1, 0)],  # T-shape
+        6: [(0, 0), (0, 1), (1, 0), (1, 1)],  # square
+        7: [(0, -1), (0, 0), (0, 1), (0, 2)],  # straight bar
     }
     figure = None
     is_falling = None
@@ -53,7 +55,7 @@ class Figure:
                     continue
                 if self.y + block[1] < 0:
                     self.y += 1
-                    continue                
+                    continue
                 is_outside_boundaries = False
 
     def is_colliding(self):
