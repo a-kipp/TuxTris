@@ -39,10 +39,10 @@ class ASCIIRender:
     def listenInput(self, stdscr):
         self.input_key = stdscr.getch()
 
-    def updateGrid(self, grid):
+    def update_grid(self, grid):
         self.config.grid = grid
 
-    def updateScore(self, score):
+    def update_score(self, score):
         self.score = score
 
     def setGameEnded(self, has_ended):

@@ -1,5 +1,4 @@
 import copy
-import random
 
 from figure import Figure
 
@@ -12,10 +11,6 @@ class GameLogic:
         self.tetromino = None
         self.score = 0
         self.game_ended = False
-
-    def getUpdatingTestingGrid(self):
-        self.config.grid[random.randint(0, self.config.line - 1)][random.randint(0, self.config.columns - 1)] = "X"
-        return self.config.grid
 
     def is_step_down_cycle(self):
         self.current_cycle_count = (self.current_cycle_count + 1) % self.falling_cycles
