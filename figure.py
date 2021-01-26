@@ -4,13 +4,13 @@ import random
 class Figure:
     # (x, y)
     figures = {
-        1: [(0, 0), (0, 1), (1, 1), (2, 1)],
-        2: [(0, 1), (1, 1), (2, 0), (2, 1)],
-        3: [(0, 0), (1, 0), (1, 1), (2, 1)],
-        4: [(0, 1), (1, 0), (1, 1), (2, 0)],
-        5: [(0, 1), (1, 0), (1, 1), (2, 1)],
-        6: [(0, 0), (0, 1), (1, 0), (1, 1)],
-        7: [(0, 0), (0, 1), (0, 2), (0, 3)],
+        1: [(-1, 0), (0, 0), (1, 0), (1, 1)],  # L-shape left-handed
+        2: [(-1, 0), (0, 0), (1, 0), (1, -1)],  # L-shape right-handed
+        3: [(0, 0), (0, -1), (1, -1), (-1, 0)],  # S-shape left-handed
+        4: [(0, 0), (0, 1), (1, 1), (-1, 0)],  # S-shape right-handed
+        5: [(0, 0), (0, -1), (0, 1), (1, 0)],  # T-shape
+        6: [(0, 0), (0, 1), (1, 0), (1, 1)],  # square
+        7: [(0, -1), (0, 0), (0, 1), (0, 2)],  # straight bar
     }
     figure = None
     is_falling = None
@@ -25,6 +25,7 @@ class Figure:
         self.is_dead = False
         self.x = random.randint(0, max_x - self.figure_width)
         self.y = 0
+        self.pushback_to_grid()
         if self.is_colliding():
             raise Exception("Initial collision")
 
@@ -51,6 +52,9 @@ class Figure:
                     continue
                 if self.y + block[1] >= self.max_y:
                     self.y -= 1
+                    continue
+                if self.y + block[1] < 0:
+                    self.y += 1
                     continue
                 is_outside_boundaries = False
 
@@ -90,7 +94,7 @@ class Figure:
             self.x += 1
 
     def rotate_right(self):
-        if self.y + 1 >= self.figure_width:
+        if self.y + 1 >= self.figure[len(self.figure) - 1][0] + 1:
             self.figure = [
                 (self.figure[i][1], -self.figure[i][0]) for i in range(len(self.figure))
             ]
@@ -103,7 +107,7 @@ class Figure:
                 self.pushback_to_grid()
 
     def rotate_left(self):
-        if self.y + 1 >= self.figure_width:
+        if self.y + 1 >= self.figure[len(self.figure) - 1][0] + 1:
             self.figure = [
                 (-self.figure[i][1], self.figure[i][0]) for i in range(len(self.figure))
             ]
