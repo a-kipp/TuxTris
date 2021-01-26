@@ -65,7 +65,7 @@ class ASCIIRender:
 
             # Declaration of strings
             title = "TuxTris - A TeamTux Game Project"[:width - 1]
-            dimensions = "Width: {}, Height: {}".format(width, height)
+            # dimensions = "Width: {}, Height: {}".format(width, height)
             short_help = "Control: move left 'a', move right 'd', rotate 'w', move down 's', quit 'q'"
             command_prompt_text = "Your score: %d" % self.score
             game_ended_text = "Game ended! - " + command_prompt_text
