@@ -5,7 +5,7 @@
 - Spiel auf der Konsole starten mit `python3 tetris.py` oder eine Release-Binary ausführen (sofern verfügbar)
 - Die fallenden Tetrominos sollten lückenfüllend angeordnet werden
 - Steuerung per Tastendruck:
-```
+```none
 Tetromino nach links bewegen:   a
 Tetromino nach rechts bewegen:  d
 Tetromino rotieren:             w
@@ -25,7 +25,7 @@ Spiel beenden:                  q
 
 ## Blöcke/Figuren (auch Tetrominoe) (7)
 
-```
+```none
 [1][ ][ ][ ]    [ ][4][4][ ]    [7][ ][ ][ ]
 [1][1][1][ ]    [4][4][ ][ ]    [7][ ][ ][ ]
 [ ][ ][ ][ ]    [ ][ ][ ][ ]    [7][ ][ ][ ]
