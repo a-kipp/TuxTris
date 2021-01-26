@@ -1,5 +1,5 @@
-## Vorschlag für die Main-Loop
-    
+# Vorschlag für die Main-Loop
+
 Die Klassen werden jeweils in sepparaten Files definiert
 
     import Gamelogic
@@ -21,11 +21,11 @@ Das Display Objekt erledigt die Anzeige des Spiels
 Hauptschleife
 
         while (game.is_running):
-            
+
 Die gesammelten Tastenanschläge werden vom inputhandler übernommen
 
             pressed_buttons = input_handler.get_input()
-            
+
 Das Spiel wird mit den Tastenanschlägen geupdated
 
             game.update(pressed_buttons)

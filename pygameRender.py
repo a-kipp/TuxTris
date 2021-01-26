@@ -2,8 +2,7 @@ import pygame as pg
 
 
 class Display:
-    def __init__(self):
-        from tetris import config
+    def __init__(self, config):
         self.config = config
         # game ground
         self.config.pictures = []
@@ -28,10 +27,10 @@ class Display:
                 self.screen.blit(self.config.pictures[color], (x, y))
         pg.display.flip()
 
-    def getEvents(self):
+    def get_events(self):
         return pg.event.get()
 
-    def getPgQuitEvent(self):
+    def get_pg_quit_event(self):
         return pg.QUIT
 
     def quit(self):
