@@ -104,7 +104,6 @@ class ASCIIRender:
                     # Render dimensions text (only for debugging)
                     # stdscr.addstr(height - 1, 0, dimensions, curses.color_pair(1))
 
-                    stdscr.move(cursor_y + 5, len(command_prompt_text) + 1)
                 except Exception as e:
                     if str(e).strip() == "_curses.error":
                         stdscr.addstr(1, 0, str(e).strip())
